@@ -3,15 +3,16 @@ import styled from 'styled-components';
 export const SearchWrapper = styled.div`
 
     padding: .1rem .15rem;
+    background-color: ${props => props.outer};
 
     div {
         display: flex;
         justify-content: center;
         align-items: center;
         height: .4rem;
-        border: 0.01rem solid #ee742f;
+        border: ${props => props.harborer ? "1px solid #ee742f" : ''};
         border-radius: 0.06rem;
-        background-color: #fff;
+        background-color: ${props => props.inner};
 
         svg {
             width: .18rem;

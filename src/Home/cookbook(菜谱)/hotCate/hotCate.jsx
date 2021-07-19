@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Grid } from "antd-mobile";
 import 'antd-mobile/dist/antd-mobile.css';
 
-import hotCateList from '../../common/cookbook-hotcat.json'
+import hotCateList from '../../../common/cookbook-hotcat.json'
 
 import { HotCateWrapper } from "./style";
 

@@ -16,7 +16,8 @@ import more from '../assets/images/more.png'
 import moreActive from '../assets/images/more-active.png'
 
 
-import CookBooks from './cookbook(菜谱)/index'
+import CookBook from './cookbook(菜谱)/index'
+import Category from './category(分类)/index'
 
 export default class Home extends PureComponent {
   state = {
@@ -70,7 +71,7 @@ export default class Home extends PureComponent {
               });
             }}
           >
-            <CookBooks/>
+            <CookBook/>
           </TabBar.Item>
           <TabBar.Item
             icon={
@@ -102,7 +103,7 @@ export default class Home extends PureComponent {
               });
             }}
           >
-            <div>category</div>
+            <Category/>
           </TabBar.Item>
           <TabBar.Item
             icon={

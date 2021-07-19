@@ -1,24 +1,42 @@
 import React, { PureComponent } from 'react'
+import { connect } from 'react-redux'
+import CookBooks from './cookbooks'
+import { getLoadDateAction } from './store/createAction'
 
 
+class Cookbook extends PureComponent {
 
-import {
-    CookBooksWrapper,
-} from './style'
-import Swiper from './swiper'
-import Search from '../../components/search/search.jsx'
-import HotCate from './hotCate'
+    componentDidMount() {
+        this.props.loadDate()
+    }
 
+    componentDidUpdate() {
+        // console.log(this.props.list);
+    }
 
-export default class CookBooks extends PureComponent {
     render() {
         return (
-            <CookBooksWrapper>
-                <header>美食大全</header>
-                <Swiper/>
-                <Search/>
-                <HotCate/>
-            </CookBooksWrapper>
+            <div>
+                <CookBooks list={this.props.list}/>
+            </div>
         )
     }
 }
+
+const mapStateToProps = state => {
+    
+    return {
+        list: state.cookbookReducer.list
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        loadDate() {
+            dispatch(getLoadDateAction())
+        },
+    
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Cookbook);
