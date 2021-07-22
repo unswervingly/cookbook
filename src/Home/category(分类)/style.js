@@ -1,4 +1,8 @@
 import styled from 'styled-components';
+import border from '../../assets/styled/border'
+
+export const UlWrapper = border(styled.ul``)
+
 
 export const CategoryWrapper = styled.div`
     display: flex;
@@ -17,8 +21,7 @@ export const CategoryWrapper = styled.div`
             display: flex;
             width: 1.4rem;
             height: .3rem;
-            border: 1px solid #fff;
-            border-radius: 0.15rem;
+            
 
             li {
                 flex: 1;

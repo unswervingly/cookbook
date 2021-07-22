@@ -7,7 +7,7 @@ const MenuList = (props) => {
     const { cate, curCate } = props;
     
     return (
-        <MenuWrapper>
+        <MenuWrapper  width="1px 0 0 0">
             <aside>
                 <ul>
                     {cate &&
@@ -27,9 +27,9 @@ const MenuList = (props) => {
             </aside>
             <section>
                 <ul>
-                    {cate &&
+                    {cate && curCate &&
                         cate[curCate].map((item) => {
-                            return <li key={item}>{item}</li>;
+                            return <li key={item} onClick={e => props.onGoList(item)}>{item}</li>;
                         })}
                 </ul>
             </section>

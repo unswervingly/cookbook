@@ -1,0 +1,1 @@
+export const CHANGE_SWITCH = "CHANGE_SWITCH"

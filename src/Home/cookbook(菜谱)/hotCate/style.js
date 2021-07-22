@@ -1,17 +1,8 @@
 import styled from 'styled-components';
-
+import border from '../../../assets/styled/border'
 
 export const HotCateWrapper = styled.div`
-    h2 {
-      height: .5rem;
-      line-height: .5rem;
-      padding-left: .1rem;
-      color: #666;
-      font-weight: normal;
-      background-color: #fff;
-      border-bottom: 1px solid #ccc;
-    }
-
+    
     .am-grid {
         padding-top: .2rem;
         background-color: #fff;
@@ -39,7 +30,15 @@ export const HotCateWrapper = styled.div`
         }
 
       }
-    }
-    
-    
+    }   
 `
+
+export const H2Wrapper = border(styled.h2`
+      height: .5rem;
+      line-height: .5rem;
+      padding-left: .1rem;
+      color: #666;
+      font-weight: normal;
+      background-color: #fff;
+      /* border-bottom: 1px solid #ccc; */
+`)

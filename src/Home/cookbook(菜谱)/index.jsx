@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { withRouter } from 'react-router-dom'
 import CookBooks from './cookbooks'
 import { getLoadDateAction } from './store/createAction'
 
@@ -14,10 +15,14 @@ class Cookbook extends PureComponent {
         // console.log(this.props.list);
     }
 
+    handleDetail(title) {
+        this.props.history.push('/detail', { title })
+    }
+
     render() {
         return (
             <div>
-                <CookBooks list={this.props.list}/>
+                <CookBooks list={this.props.list} onGoDetail={title => this.handleDetail(title)}/>
             </div>
         )
     }
@@ -26,7 +31,7 @@ class Cookbook extends PureComponent {
 const mapStateToProps = state => {
     
     return {
-        list: state.cookbookReducer.list
+        list: state.cookbookReducer.list,
     }
 }
 
@@ -39,4 +44,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Cookbook);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Cookbook));

@@ -12,7 +12,7 @@ const Boutique = (props) => {
         props.list.length > 0 &&
           props.list.map((item, index) => {
             return (
-              <li key={item.id}>
+              <li key={item.id} onClick={e => props.onGoDetail(item.name)}>
                 <div>
                   <img
                     src={item.img}
@@ -20,10 +20,10 @@ const Boutique = (props) => {
                   />
                 </div>
                 <div>
-                  <p>{item.name}</p>
-                  <p>
-                    <span>{item.all_click}</span>浏览
-                    <span>{item.favorites}</span>收藏
+                  <p className="text-nowrap">{item.name}</p>
+                  <p className="text-nowrap">
+                    <span>{item.all_click}浏览</span>
+                    <span>{item.favorites}收藏</span>
                   </p>
                 </div>
               </li>

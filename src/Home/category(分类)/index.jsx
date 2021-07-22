@@ -1,48 +1,63 @@
 import React, { PureComponent } from 'react'
-
+import { connect } from "react-redux";
 
 import {
     CategoryWrapper,
+    UlWrapper,
 } from './style'
 import Search from '../../components/search/search.jsx'
 
 import Menu from './menu/menu';
+import { changeCateAsideAction, changeCateTypeAction } from './store/createAction';
 
-export default class Category extends PureComponent {
+class Category extends PureComponent {
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            tabIndex: 0,
-            type: 'category'
-        }
-    }
- 
-    handleClick(index) {
-        this.setState({
-            tabIndex: index,
-            type: index === 0 ? "category" : "material"
-        })
+    handleClick(type) {
+        // console.log(type);
+        this.props.changeCateType(type);
+        this.props.changeCateAside(type === 'category' ? '热门' : '肉类')
     }
 
     render() {
         // console.log(this.state.type);
+        // console.log(this.props.cateType);
+        // console.log(this.props);
         return (
             <CategoryWrapper>
                 <nav>
-                    <ul>
-                        <li className={this.state.tabIndex === 0 ? "active" : ''} onClick={e => this.handleClick(0)}>分类</li>
-                        <li className={this.state.tabIndex === 1 ? "active" : ''} onClick={e => this.handleClick(1)}>食材</li>
-                        <li className={this.state.tabIndex === 0 ? "slide" : 'slide right'}></li>
-                    </ul>
+                    <UlWrapper color="pink" radius={0.15}>
+                        <li className={this.props.cateType === 'category' ? "active" : ''} onClick={e => this.handleClick('category')}>分类</li>
+                        <li className={this.props.cateType === 'material' ? "active" : ''} onClick={e => this.handleClick('material')}>食材</li>
+                        <li className={this.props.cateType === 'category' ? "slide" : 'slide right'}></li>
+                    </UlWrapper>
                 </nav>
 
-                <Search outer="#fff" inner="#efefef" harborer={false}/>
+                <Search outer="#fff" inner="#efefef" harborer={false}
+                    radius={0.06} />
 
-                <Menu type={this.state.type}/>
+                <Menu />
             </CategoryWrapper>
         )
     }
-
-    
 }
+
+
+const mapStateToProps = state => {
+    return {
+        cateType: state.cateReducer.routeInfo.cateType,
+    }
+}
+
+const mapDispatchToProps = dispatch => {
+    return {
+        changeCateType(cateType) {
+            dispatch(changeCateTypeAction(cateType))
+        },
+        changeCateAside(cateAside) {
+            dispatch(changeCateAsideAction(cateAside))
+        }
+
+    }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Category);

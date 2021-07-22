@@ -1,11 +1,14 @@
 import styled from 'styled-components';
+import border from '../../assets/styled/border'
 
-export const MenuWrapper = styled.div`
+
+export const MenuWrapper = border( styled.div`
     display: flex;
     flex-direction: row;
     flex: 1;
     overflow: hidden;
-    border-top: 1px solid #ccc;
+    /* border-top: 1px solid #ccc; */
+    
     aside {
         overflow-y: scroll;
         width: .9rem;
@@ -48,4 +51,4 @@ export const MenuWrapper = styled.div`
             }
         }
     }
-`
+`)

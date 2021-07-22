@@ -1,9 +1,13 @@
 import { combineReducers } from 'redux'
 
 import { cookbookReducer } from '../Home/cookbook(菜谱)/store/index'
+import { HomeReducer } from '../Home/store/index'
+import { cateReducer } from '../Home/category(分类)/store/index'
 
 const reducer = combineReducers({
-    cookbookReducer
+    cookbookReducer,
+    HomeReducer,
+    cateReducer,
 })
 
 export default  reducer;

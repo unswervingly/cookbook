@@ -1,19 +1,24 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import { Provider } from 'react-redux'
+import React from "react";
+import ReactDOM from "react-dom";
+import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
-import App from './App.jsx';
+import App from "./App.jsx";
 
-import './assets/styles/reset.css'
+import "./assets/styles/reset.css";
 
-import store from './store/index.js';
+import store from "./store/index.js";
+import 'animate.css'
+
 
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>,
-  document.getElementById('root')
+  document.getElementById("root")
 );
 
 // If you want to start measuring performance in your app, pass a function

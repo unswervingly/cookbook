@@ -16,14 +16,15 @@ const CookBooks = memo(function(props) {
     const swiper = memoize(list => list.slice(0, 5))
 
     const hotCate = memoize(list => list.slice(0, 5))
-
+    
     return (
         <CookBooksWrapper>
             <header>美食大全</header>
-            <Swiper list={swiper(props.list)}/>
-            <Search  outer="#f5f5f9" inner="#fff" harborer={true}/>
+            <Swiper list={swiper(props.list)} onGoDetail={props.onGoDetail}/>
+            <Search outer="#f5f5f9" inner="#fff" harborer={true}
+                    radius={0.06} color="#ee742f"/>
             <HotCate/>
-            <Boutique  list={hotCate(props.list)}/>
+            <Boutique  list={hotCate(props.list)} onGoDetail={props.onGoDetail}/>
         </CookBooksWrapper>
     )
 })

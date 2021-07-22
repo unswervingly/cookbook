@@ -23,7 +23,7 @@ const Swiper = (props) => {
                {
                    props.list.length > 0 && props.list.map((item, index) => {
                        return (
-                           <img key={item.id} src={item.img} alt="" />
+                           <img key={item.id} src={item.img} alt="" onClick={e => props.onGoDetail(item.name)}/>
                        )
                    })
                }
