@@ -1,5 +1,5 @@
-import React, { PureComponent } from "react";
-import { connect } from "react-redux";
+import React, { memo, useState } from 'react'
+import {  useDispatch, useSelector } from "react-redux";
 import { TabBar } from "antd-mobile";
 import "antd-mobile/dist/antd-mobile.css";
 
@@ -19,175 +19,171 @@ import CookBook from "./cookbook(菜谱)/index";
 import Category from "./category(分类)/index";
 import Map from "./map/map";
 import More from "./more(更多)/more";
+
 import { changeSelectedTabAction } from "./category(分类)/store/createAction";
+import { animate } from '../hoc/animate'
 
 
-class Home extends PureComponent {
-  state = {
-    selectedTab: this.props.selected,
+const  Home = memo(function(props) {
+
+  const state = useSelector(state => {
+    return {
+      selected: state.cateReducer.routeInfo.selected,
+      checked: state.HomeReducer.checked
+    }
+  })
+  const [tabs, setTabs] = useState({
+    selectedTab: state.selected,
     hidden: false,
     fullScreen: true,
-  };
+  })
 
+
+  const dispatch = useDispatch();
   
-  render() {
-    const tabItems = [
-      <TabBar.Item
-        title="美食大全"
-        key="Life"
-        icon={
-          <div
-            style={{
-              width: "26px",
-              height: "26px",
-              background: `url(${cookBooks}) center center /  26px 26px no-repeat`,
-            }}
-          />
-        }
-        selectedIcon={
-          <div
-            style={{
-              width: "26px",
-              height: "26px",
-              background: `url(${cookBooksActive}) center center /  26px 26px no-repeat`,
-            }}
-          />
-        }
-        selected={this.state.selectedTab === "cookbooks"}
-        onPress={() => {
-          this.setState({
-            selectedTab: "cookbooks",
-          });
-          this.props.changeSelectedTab('cookbooks')
-        }}
-      >
-        <CookBook />
-      </TabBar.Item>,
-      <TabBar.Item
-        icon={
-          <div
-            style={{
-              width: "22px",
-              height: "22px",
-              background: `url(${menu}) center center /  21px 21px no-repeat`,
-            }}
-          />
-        }
-        selectedIcon={
-          <div
-            style={{
-              width: "22px",
-              height: "22px",
-              background: `url(${menuActive}) center center /  21px 21px no-repeat`,
-            }}
-          />
-        }
-        title="分类"
-        key="category"
-        selected={this.state.selectedTab === "category"}
-        onPress={() => {
-          this.setState({
-            selectedTab: "category",
-          })
-          
-          this.props.changeSelectedTab('category')
 
-        }}
-      >
-        <Category />
-      </TabBar.Item>,
-      <TabBar.Item
-        icon={
-          <div
-            style={{
-              width: "26px",
-              height: "26px",
-              background: `url(${location}) center center /  26px 26px no-repeat`,
-            }}
-          />
-        }
-        selectedIcon={
-          <div
-            style={{
-              width: "26px",
-              height: "26px",
-              background: `url(${locationActive}) center center /  26px 26px no-repeat`,
-            }}
-          />
-        }
-        title="美食地图"
-        key="map"
-        selected={this.state.selectedTab === "map"}
-        onPress={() => {
-          this.setState({
-            selectedTab: "map",
-          });
-        }}
-      >
-        <Map />
-      </TabBar.Item>,
-      <TabBar.Item
-        icon={{
-          uri: more,
-        }}
-        selectedIcon={{
-          uri: moreActive,
-        }}
-        title="更多"
-        key="more"
-        selected={this.state.selectedTab === "more"}
-        onPress={() => {
-          this.setState({
-            selectedTab: "more",
-          });
-        }}
-      >
-        <More />
-      </TabBar.Item>,
-    ];
+  const tabItems = [
+    <TabBar.Item
+      title="美食大全"
+      key="Life"
+      icon={
+        <div
+          style={{
+            width: "26px",
+            height: "26px",
+            background: `url(${cookBooks}) center center /  26px 26px no-repeat`,
+          }}
+        />
+      }
+      selectedIcon={
+        <div
+          style={{
+            width: "26px",
+            height: "26px",
+            background: `url(${cookBooksActive}) center center /  26px 26px no-repeat`,
+          }}
+        />
+      }
+      selected={tabs.selectedTab === "cookbooks"}
+      onPress={() => {
+        
+        setTabs({
+          selectedTab: "cookbooks",
+        })
 
-    // console.log(this.props.checked);
-    // console.log(this.props.selected);
-    return (
-      <div
-        style={
-          this.state.fullScreen
-            ? { position: "fixed", height: "100%", width: "100%", top: 0 }
-            : { height: 400 }
-        }
+        dispatch(changeSelectedTabAction('cookbooks'));
+      }}
+    >
+      <CookBook />
+    </TabBar.Item>,
+    <TabBar.Item
+      icon={
+        <div
+          style={{
+            width: "22px",
+            height: "22px",
+            background: `url(${menu}) center center /  21px 21px no-repeat`,
+          }}
+        />
+      }
+      selectedIcon={
+        <div
+          style={{
+            width: "22px",
+            height: "22px",
+            background: `url(${menuActive}) center center /  21px 21px no-repeat`,
+          }}
+        />
+      }
+      title="分类"
+      key="category"
+      selected={tabs.selectedTab === "category"}
+      onPress={() => {
+        
+        setTabs({
+          selectedTab: "category",
+        })
+
+        dispatch(changeSelectedTabAction('category'));
+        
+      }}
+    >
+      <Category />
+    </TabBar.Item>,
+    <TabBar.Item
+      icon={
+        <div
+          style={{
+            width: "26px",
+            height: "26px",
+            background: `url(${location}) center center /  26px 26px no-repeat`,
+          }}
+        />
+      }
+      selectedIcon={
+        <div
+          style={{
+            width: "26px",
+            height: "26px",
+            background: `url(${locationActive}) center center /  26px 26px no-repeat`,
+          }}
+        />
+      }
+      title="美食地图"
+      key="map"
+      selected={tabs.selectedTab === "map"}
+      onPress={() => {
+
+        setTabs({
+          selectedTab: "map",
+        })
+      }}
+    >
+      <Map />
+    </TabBar.Item>,
+    <TabBar.Item
+      icon={{
+        uri: more,
+      }}
+      selectedIcon={{
+        uri: moreActive,
+      }}
+      title="更多"
+      key="more"
+      selected={tabs.selectedTab === "more"}
+      onPress={() => {
+
+        setTabs({
+          selectedTab: "more",
+        })
+
+      }}
+    >
+      <More />
+    </TabBar.Item>,
+  ];
+
+  return (
+    <div
+      style={{ position: "fixed", height: "100%", width: "100%", top: 0 }
+      }
+    >
+      <TabBar
+        unselectedTintColor="#949494"
+        tintColor="#000"
+        barTintColor="white"
+        hidden={tabs.hidden}
+        prerenderingSiblingsNumber={Infinity}
       >
-        <TabBar
-          unselectedTintColor="#949494"
-          tintColor="#000"
-          barTintColor="white"
-          hidden={this.state.hidden}
-          prerenderingSiblingsNumber={Infinity}
-        >
-          {
-            this.props.checked ? 
+        {
+          state.checked ?
             tabItems.map(item => item)
             : tabItems.filter((item, index) => index !== 2)
-          }
-        </TabBar>
-      </div>
-    );
-  }
-}
+        }
+      </TabBar>
+    </div>
+  );
+})
 
-const mapStateToProps = state => {
-    
-  return {
-      checked: state.HomeReducer.checked,
-      selected: state.cateReducer.routeInfo.selected,
-  }
-}
 
-const mapDispatchToProps = dispatch => {
-  return {
-      changeSelectedTab(selected) {
-        dispatch(changeSelectedTabAction(selected))
-      }
-  
-  }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(Home);
+export default animate(Home);

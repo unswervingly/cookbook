@@ -10,6 +10,7 @@ import {
     ListWrapper,  
 } from './style'
 import { getLoadDateAction } from '../Home/cookbook(菜谱)/store/createAction';
+import {animate} from '../hoc/animate'
 
 class List extends PureComponent {
 
@@ -22,11 +23,12 @@ class List extends PureComponent {
 
     handleLeft() {
         let { history } = this.props;
-        history.goBack();
+        // history.goBack();
+        history.push('/home', {from: '/list'});
     }
 
     handleDetail(title) {
-        this.props.history.push('/detail', { title })
+        this.props.history.push('/detail', { listTitle: this.props.location.state.title, from: '/list', title })
     }
     
     render() {
@@ -38,7 +40,7 @@ class List extends PureComponent {
                     onLeftClick={e => this.handleLeft()}
                     style={{ backgroundColor: '#ee742f' }}
                 >
-                    {this.props.location.state.title}
+                    {this.props.location.state && this.props.location.state.title}
                 </NavBar>
                 <ul>
                     {
@@ -81,4 +83,4 @@ const mapDispatchToProps = dispatch => {
     }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(List));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(animate(List)));

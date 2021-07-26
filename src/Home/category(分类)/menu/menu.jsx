@@ -1,94 +1,81 @@
-import React, { PureComponent } from 'react'
-import { connect } from "react-redux";
+import React, { memo } from 'react'
+
 import { withRouter } from 'react-router-dom'
 import PropTypes from 'prop-types'
 
 import MenuList from '../../../components/menuList/menuList'
-import { get } from '../../../services/cookbook'
-import { changeCateAsideAction } from '../store/createAction';
 
-class Menu extends PureComponent {
-    static propTypes = {
-        type: PropTypes.string
-    }
 
-    constructor(props) {
-        super(props);
+import useCateChange from './useCateChange'
+import useGoList from './useGoList'
 
-        this.state = {
-            cate: null,
-            // type: 'category',
-            // curCate: this.props.type === 'category' ? '热门' : '肉类'
-        }
-    }
 
-    async componentDidMount() {
-        let res = await get({
-            url: '/api/category'
-        })
-        // console.log(res.data.data);
-        this.setState({
-            cate: res.data.data
-        })
+const Menu = memo(function (props) {
 
-        if(!this.props.cateAside) {
-            this.props.changeCateAside(this.props.cateType === 'category' ? '热门' : '肉类')
-        }
-    }
+    // const [cate, setCate] = useState(null);
 
-    // static getDerivedStateFromProps(nextProps, preState) {
-    //     if (nextProps.type === preState.type) {
-    //         return null
-    //     } else {
-    //         return {
-    //             curCate: nextProps.type === 'category' ? '热门' : '肉类',
-    //             type: nextProps.type
-    //         }
+    // const state = useSelector(state => {
+    //     return {
+    //         cateType: state.cateReducer.routeInfo.cateType,
+    //         cateAside: state.cateReducer.routeInfo.cateAside,
     //     }
-    // }
+    // })
+
+    const { cate, cateType, cateAside, handleCate, } = useCateChange();
+
+    const { handleGoList } = useGoList();
+
+    // const history = useHistory();
+
+    // const dispatch = useDispatch()
+
+    // useEffect(() => {
+    //     (async () => {
+    //         let res = await get({
+    //             url: '/api/category'
+    //         })
+    //         // this.setState({
+    //         //     cate: res.data.data
+    //         // })
+
+    //         setCate(res.data.data)
+
+    //         if (!state.cateAside) {
+    //             dispatch(changeCateAsideAction(state.cateType === 'category' ? '热门' : '肉类'))
+    //         }
+    //     })()
+    // }, [state.cateType, state.cateAside, dispatch])
+
+    // const handleCate = useCallback((item) => {
+    //     dispatch(changeCateAsideAction(item))
+    // }, [dispatch])
+
+    // const handleGoList = useCallback((title) => {
+    //     history.push('/list', { title })
+    // }, [history])
 
 
-    render() {
-        // console.log(this.state.cate && this.state.cate[this.props.type]);
-        // console.log(this.props.type);
-        return (
-            <MenuList
-                onAsideClick={(item) => this.handleCate(item)}
-                curCate={this.props.cateAside}
-                cate={this.state.cate && this.state.cate[this.props.cateType]}
-                onGoList={title => this.handleGoList(title)}
-            >
-            </MenuList>
-            // null
-        )
-    }
+    return (
+        <MenuList
+            onAsideClick={(item) => handleCate(item)}
+            curCate={cateAside}
+            cate={cate && cate[cateType]}
+            onGoList={title => handleGoList(title)}
+        >
+        </MenuList>
+        // null
+    )
+})
 
-    handleCate(item) {
-        // console.log(item);
-        this.props.changeCateAside(item)
-    }
+// 类组件判断类型
+// static propTypes = {
+//     type: PropTypes.string
+// }
 
-    handleGoList(title) {
-        // console.log(title);
-        this.props.history.push('/list', { title })
-    }
+
+Menu.propTypes = {
+    type: PropTypes.string
 }
 
-const mapStateToProps = state => {
-
-    return {
-        cateType: state.cateReducer.routeInfo.cateType,
-        cateAside: state.cateReducer.routeInfo.cateAside,
-    }
-}
-
-const mapDispatchToProps = dispatch => {
-    return {
-        changeCateAside(cateAside) {
-            dispatch(changeCateAsideAction(cateAside))
-        }
-
-    }
-}
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Menu));
+export default withRouter(Menu);
 

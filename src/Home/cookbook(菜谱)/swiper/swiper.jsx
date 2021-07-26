@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Carousel } from "antd-mobile";
 import 'antd-mobile/dist/antd-mobile.css';
 import PropTypes from 'prop-types'
@@ -11,7 +11,7 @@ import {
 
 
 
-const Swiper = (props) => {
+const Swiper = memo(function(props) {
     return (
         <SwiperWrapper>
             <Carousel 
@@ -30,7 +30,7 @@ const Swiper = (props) => {
             </Carousel>
         </SwiperWrapper>
     )
-}
+})
 
 // 函数式组件绑定类型检查
 Swiper.propTypes = {

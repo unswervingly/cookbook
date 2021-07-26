@@ -1,47 +1,43 @@
-import React, { PureComponent } from 'react'
-import { connect } from 'react-redux'
+import React, { memo } from 'react'
+// import { shallowEqual, useDispatch, useSelector } from 'react-redux'
 import { withRouter } from 'react-router-dom'
 import CookBooks from './cookbooks'
-import { getLoadDateAction } from './store/createAction'
+// import { getLoadDateAction } from './store/createAction'
 
+import useGetState from './useGetState'
 
-class Cookbook extends PureComponent {
+import useGoHistory from './useGoHistory'
 
-    componentDidMount() {
-        this.props.loadDate()
-    }
+const Cookbook = memo(function(props) {
+    // const state = useSelector(state => {
+    //     return {
+    //         list: state.cookbookReducer.list
+    //     }
+    // }, shallowEqual)
 
-    componentDidUpdate() {
-        // console.log(this.props.list);
-    }
+    // const dispatch = useDispatch();
 
-    handleDetail(title) {
-        this.props.history.push('/detail', { title })
-    }
+    // useEffect(() => {
+    //     dispatch(getLoadDateAction()) 
+    // }, [dispatch])
 
-    render() {
-        return (
-            <div>
-                <CookBooks list={this.props.list} onGoDetail={title => this.handleDetail(title)}/>
-            </div>
-        )
-    }
-}
-
-const mapStateToProps = state => {
+    const state = useGetState();
     
-    return {
-        list: state.cookbookReducer.list,
-    }
-}
+    // const history = useHistory()
 
-const mapDispatchToProps = dispatch => {
-    return {
-        loadDate() {
-            dispatch(getLoadDateAction())
-        },
-    
-    }
-}
+    // const handleDetail = (title) => {
+    //     history.push('/detail', { title, from: '/home' })
+    // }
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Cookbook));
+    const { handleDetail } = useGoHistory();
+
+    return (
+        <div>
+            <CookBooks list={state.state.list} onGoDetail={title => handleDetail(title)}/>
+        </div>
+    )
+})
+
+
+
+export default withRouter(Cookbook);
