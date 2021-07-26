@@ -8,8 +8,10 @@ const useCateChange = () => {
 
     const {cateType, cateAside} = useSelector(state => {
         return {
-            cateType: state.cateReducer.routeInfo.cateType,
-            cateAside: state.cateReducer.routeInfo.cateAside,
+            // cateType: state.cateReducer.routeInfo.cateType,
+            cateType: state.getIn(['cateReducer', 'routeInfo', 'cateType']),
+            // cateAside: state.cateReducer.routeInfo.cateAside,
+            cateAside: state.getIn(['cateReducer', 'routeInfo', 'cateAside']),
         }
     })
     

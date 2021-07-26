@@ -5,9 +5,10 @@ import { getLoadDateAction } from './store/createAction'
 
 
 const useGetState = () => {
-    const state = useSelector(state => {
+    const { list } = useSelector(state => {
         return {
-            list: state.cookbookReducer.list
+            list: state.get('cookbookReducer').get('list')
+            // list: state.cookbookReducer.list
         }
     }, shallowEqual)
 
@@ -20,7 +21,7 @@ const useGetState = () => {
     }, [dispatch])
 
     return {
-        state
+        list
     }
 }
 

@@ -1,48 +1,50 @@
-import React, { PureComponent } from 'react'
-import { withRouter } from 'react-router-dom'
+import React, { memo, useCallback } from 'react'
+import { useHistory, useLocation } from 'react-router-dom'
 import { NavBar, Icon } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css';
 
-import {animate} from '../hoc/animate'
+import { animate } from '../hoc/animate'
 import {
     DetailWrapper,
 } from './style'
-class Detail extends PureComponent {
 
-    handleLeft(title) {
-        let { history } = this.props;
+const Detail = memo(function () {
+
+    const history = useHistory();
+    const location = useLocation();
+
+
+    const handleLeft = useCallback((title) => {
+        // let { history } = this.props;
         // history.goBack();
-        // console.log(this.props.location.state.from);
-        let {from, listTitle} = this.props.location.state
-        history.push(from, {title: listTitle, from: '/detail'});
-    }
+        let { from, listTitle } = location.state
+        history.push(from, { title: listTitle, from: '/detail' });
+    }, [history, location])
 
-
-    render() {
-
-        const {state} = this.props.location;
-        return (
-            <DetailWrapper>
-                <NavBar mode="dark"
-                    icon={<Icon type="left" />}
-                    onLeftClick={e => this.handleLeft()}
-                    style={{ backgroundColor: '#ee742f' }}
-                >
-                    {state && state.title}
-                </NavBar>
+    return (
+        <DetailWrapper>
+            <NavBar mode="dark"
+                icon={<Icon type="left" />}
+                onLeftClick={e => handleLeft()}
+                style={{ backgroundColor: '#ee742f' }}
+            >
+                {location.state && location.state.title}
+            </NavBar>
+            <div>
                 <div>
-                    <div>
-                        <img src="https://s1.cdn.jiaonizuocai.com/videoImg/201509/0722/55ed97982b6fc.JPG/OTAweDYwMA" alt="" />
-                    </div>
-                    <div className="cookbook_name">
-                        <h1>{this.props.location.state && this.props.location.state.title}</h1>
-                        <h3>666666浏览/9999999收藏</h3>
-                        <button>收藏</button>
-                    </div>
+                    <img src="https://s1.cdn.jiaonizuocai.com/videoImg/201509/0722/55ed97982b6fc.JPG/OTAweDYwMA" alt="" />
                 </div>
-            </DetailWrapper>
-        )
-    }
-}
+                <div className="cookbook_name">
+                    <h1>{location.state && location.state.title}</h1>
+                    <h3>666666浏览/9999999收藏</h3>
+                    <button>收藏</button>
+                </div>
+            </div>
+        </DetailWrapper>
+    )
+})
 
-export default withRouter(animate(Detail));
+
+
+
+export default animate(Detail);

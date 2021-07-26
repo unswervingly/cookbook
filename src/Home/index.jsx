@@ -28,8 +28,8 @@ const  Home = memo(function(props) {
 
   const state = useSelector(state => {
     return {
-      selected: state.cateReducer.routeInfo.selected,
-      checked: state.HomeReducer.checked
+      selected: state.getIn(['cateReducer', 'routeInfo', 'selected']),
+      checked: state.getIn(['HomeReducer', 'checked']),
     }
   })
   const [tabs, setTabs] = useState({

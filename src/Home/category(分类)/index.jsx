@@ -13,9 +13,10 @@ import { changeCateAsideAction, changeCateTypeAction } from './store/createActio
 
 const Category = memo(function (props) {
 
-    const state = useSelector(state => {
+    const { cateType } = useSelector(state => {
         return {
-            cateType: state.cateReducer.routeInfo.cateType,
+            // cateType: state.cateReducer.routeInfo.cateType,
+            cateType: state.getIn(['cateReducer', 'routeInfo', 'cateType']),
         }
     })
 
@@ -34,9 +35,9 @@ const Category = memo(function (props) {
         <CategoryWrapper>
             <nav>
                 <UlWrapper color="pink" radius={0.15}>
-                    <li className={state.cateType === 'category' ? "active" : ''} onClick={e => handleClick('category')}>分类</li>
-                    <li className={state.cateType === 'material' ? "active" : ''} onClick={e => handleClick('material')}>食材</li>
-                    <li className={state.cateType === 'category' ? "slide" : 'slide right'}></li>
+                    <li className={cateType === 'category' ? "active" : ''} onClick={e => handleClick('category')}>分类</li>
+                    <li className={cateType === 'material' ? "active" : ''} onClick={e => handleClick('material')}>食材</li>
+                    <li className={cateType === 'category' ? "slide" : 'slide right'}></li>
                 </UlWrapper>
             </nav>
 

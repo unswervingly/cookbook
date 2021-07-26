@@ -1,5 +1,5 @@
-import React, { PureComponent } from 'react'
-import { connect } from "react-redux";
+import React, { memo, useCallback } from 'react'
+import { useDispatch, useSelector } from "react-redux";
 import { Switch, NavBar } from 'antd-mobile';
 import 'antd-mobile/dist/antd-mobile.css';
 
@@ -10,46 +10,51 @@ import {
 } from './style'
 import {
     changeSwitchAction,
-  } from '../store/createAction'
+} from '../store/createAction'
 
-class More extends PureComponent {
 
-    render() {
-        // console.log(this.props.checked);
-        return (
-            <NavbarWrapper>
-                <NavBar mode="dark">
-                    更多
-                </NavBar>
-                <MoreWrapper>
+const More = memo(function (props) {
 
-                    <span>百度地图：</span>
-                    <Switch
-                        checked={this.props.checked}
-                        onClick={this.props.handleSwitch}
-                    />
-                </MoreWrapper>
-            </NavbarWrapper>
-        )
-    }
-}
+    const { checked } = useSelector(state => {
+        return {
+            // checked: state.HomeReducer.checked,
+            checked: state.getIn(['HomeReducer', 'checked']),
+            
+        }
+    })
 
-const mapStateToProps = state => {
-    
-    return {
-        checked: state.HomeReducer.checked,
-    }
-}
 
-const mapDispatchToProps = dispatch => {
-    return {
-        handleSwitch(checked) {
-            dispatch(changeSwitchAction(checked))
-            // 本地存储： 将checked存起来
-            localStorage.setItem('checked', checked)
-        },
-    
-    }
-}
+    const dispatch = useDispatch();
 
-export default connect(mapStateToProps, mapDispatchToProps)(More);
+    const handleSwitch = useCallback((checked) => {
+        dispatch(changeSwitchAction(checked))
+        // 本地存储： 将checked存起来
+        localStorage.setItem('checked', checked)
+    }, [dispatch])
+
+    return (
+        <NavbarWrapper>
+            <NavBar mode="dark">
+                更多
+            </NavBar>
+            <MoreWrapper>
+
+                <span>百度地图：</span>
+                <Switch
+                    checked={checked}
+                    onClick={handleSwitch}
+                />
+            </MoreWrapper>
+        </NavbarWrapper>
+    )
+})
+
+
+
+
+
+
+
+
+
+export default More;

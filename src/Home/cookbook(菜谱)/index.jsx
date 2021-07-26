@@ -33,7 +33,7 @@ const Cookbook = memo(function(props) {
 
     return (
         <div>
-            <CookBooks list={state.state.list} onGoDetail={title => handleDetail(title)}/>
+            <CookBooks list={state.list} onGoDetail={title => handleDetail(title)}/>
         </div>
     )
 })
